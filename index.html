@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ferro Velho — Calculadora FiveM RP</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="badge">FV</div>
+      <h1>FERRO <span>VELHO</span></h1>
+    </div>
+    <div class="nav">
+      <button type="button" class="nav-btn active" id="btnCraft" aria-pressed="true">CRAFT</button>
+      <button type="button" class="nav-btn" id="btnVenda" aria-pressed="false">VENDA</button>
+      <button type="button" class="nav-btn" id="btnComprar" aria-pressed="false">COMPRAR</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div id="viewPort">
+    <!-- ============ ABA CRAFT ============ -->
+    <section id="areaCraft" class="area active">
+      <div class="card">
+        <div class="card-title">Fabricação de Produtos</div>
+
+        <div class="craft-wrap">
+          <div class="craft-left">
+            <div class="section-label">Produtos</div>
+            <div class="craft-products" id="productsGrid"></div>
+          </div>
+          <div class="craft-right" id="craftDetails">
+            <div class="craft-empty" id="craftEmpty">
+              <p>Selecione um produto à esquerda</p>
+            </div>
+            <div class="craft-content" id="craftContent" style="display:none;">
+              <div class="craft-right-header">
+                <img id="detailImg" src="" alt="Molde">
+                <div class="craft-right-info">
+                  <h2 id="detailNome">Produto</h2>
+                  <span id="detailPrice" class="price-tag">R$ 0,00</span>
+                  <div id="detailFaixa" class="faixa"></div>
+                </div>
+              </div>
+
+              <!-- Seletor de quantidade -->
+              <div class="qty-section">
+                <div class="section-label">Quantidade para fabricar</div>
+                <div class="qty-control">
+                  <input type="number" id="detailQtyInput" value="1" min="0" step="1">
+                </div>
+                <div class="qty-quick">
+                  <button type="button" class="qty-quick-btn" onclick="appQtyQuick(5)">+5</button>
+                  <button type="button" class="qty-quick-btn" onclick="appQtyQuick(10)">+10</button>
+                  <button type="button" class="qty-quick-btn" onclick="appQtyQuick(25)">+25</button>
+                  <button type="button" class="qty-quick-btn" onclick="appQtyQuick(50)">+50</button>
+                  <button type="button" class="qty-quick-btn qty-max" onclick="appQtyMax()">Máximo</button>
+                </div>
+              </div>
+
+              <!-- Materiais disponíveis (para Máximo) -->
+              <div class="avail-section">
+                <div class="section-label">Materiais disponíveis (para Máximo)</div>
+                <div class="avail-grid">
+                  <div class="avail-item">
+                    <label>Plástico</label>
+                    <input type="number" id="avail_plastico" value="0" min="0" step="1">
+                  </div>
+                  <div class="avail-item">
+                    <label>Vidro</label>
+                    <input type="number" id="avail_vidro" value="0" min="0" step="1">
+                  </div>
+                  <div class="avail-item">
+                    <label>Borracha</label>
+                    <input type="number" id="avail_borracha" value="0" min="0" step="1">
+                  </div>
+                  <div class="avail-item">
+                    <label>Alumínio</label>
+                    <input type="number" id="avail_aluminio" value="0" min="0" step="1">
+                  </div>
+                  <div class="avail-item">
+                    <label>Cobre</label>
+                    <input type="number" id="avail_cobre" value="0" min="0" step="1">
+                  </div>
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-primary" id="btnAddCarrinho" style="width:100%; margin-top:16px;">Adicionar ao Carrinho</button>
+
+              <!-- Carrinho de Fabricação -->
+              <div class="craft-cart">
+                <div class="section-label">Carrinho de Fabricação</div>
+                <div id="cartList"></div>
+                <div id="cartEmpty" class="empty-state">
+                  <div class="emoji">🛒</div>
+                  <div>Nenhum item no carrinho</div>
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-ghost" id="btnCalcularMateriais" style="width:100%; margin-top:16px;">Calcular Materiais</button>
+
+              <!-- Resumo dos Materiais -->
+              <div class="craft-summary" id="craftSummary" style="display:none;">
+                <div class="section-label">Materiais necessários (total)</div>
+                <div class="craft-materials" id="craftMaterials"></div>
+                <div class="craft-summary-row">
+                  <div class="summary-item">
+                    <div class="lbl">Total de materiais (unidades)</div>
+                    <div class="val" id="detailTotalMats">0</div>
+                  </div>
+                  <div class="summary-item">
+                    <div class="lbl">Faturamento total previsto</div>
+                    <div class="val total" id="detailTotalRev">R$ 0,00</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ABA VENDA ============ -->
+    <section id="areaVenda" class="area">
+      <div class="card">
+        <div class="card-title">Compra de Materiais dos Clientes</div>
+
+        <div class="mode-toggle">
+          <button type="button" class="mode-btn active" id="modeDesmanchando">DESMANCHANDO</button>
+          <button type="button" class="mode-btn" id="modeDescontado">DESCONTADO</button>
+        </div>
+
+        <div class="section-label">Itens da Operação</div>
+        <table class="wida">
+          <thead>
+            <tr>
+              <th style="width:30%;">Material</th>
+              <th style="width:18%;">Quantidade</th>
+              <th style="width:24%;">Valor Unitário</th>
+              <th style="width:24%;">Subtotal</th>
+              <th style="width:14%;">Ação</th>
+            </tr>
+          </thead>
+          <tbody id="vendaTbody"></tbody>
+        </table>
+        <div id="vendaEmpty" class="empty-state">
+          <div class="emoji">📦</div>
+          <div>Nenhum material adicionado ainda</div>
+        </div>
+
+        <div class="venda-add">
+          <div class="section-label">Adicionar material à cesta</div>
+          <div class="form-row">
+            <select id="vendaMat"></select>
+            <input type="number" id="vendaQtd" placeholder="Qtd" min="0" step="1">
+            <button type="button" class="btn btn-primary btn-add" id="btnAddMat">Adicionar</button>
+          </div>
+        </div>
+
+        <div class="totals">
+          <div class="total-item">
+            <div class="lbl">Valor bruto total</div>
+            <div class="val" id="vBruto">R$ 0,00</div>
+            <div class="note">Soma no modo desmanche</div>
+          </div>
+          <div class="total-item">
+            <div class="lbl">Desconto (dinheiro sujo)</div>
+            <div class="val desconto" id="vDesc">R$ 0,00</div>
+            <div class="note">30% sobre o valor bruto</div>
+          </div>
+          <div class="total-item">
+            <div class="lbl">LUCRO (dinheiro sujo)</div>
+            <div class="val lucro" id="vLucro">R$ 0,00</div>
+            <div class="note">Valor que fica com o ferro-velho</div>
+          </div>
+          <div class="total-item">
+            <div class="lbl">Total a pagar ao cliente</div>
+            <div class="val final" id="vFinal">R$ 0,00</div>
+            <div class="note">Valor final da operação</div>
+          </div>
+        </div>
+
+        <div class="actions" style="margin-top:28px;">
+          <button type="button" class="btn btn-ghost" id="btnCopyResumo">Copiar Resumo</button>
+          <button type="button" class="btn btn-danger" id="btnLimparVenda">Limpar Operação</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ABA COMPRAR ============ -->
+    <section id="areaComprar" class="area">
+      <div class="card">
+        <div class="card-title">Compra de Materiais de Outros Jogadores</div>
+
+        <div class="mode-info">
+          <span class="mode-badge">MODO DESCONTADO — 30% do valor bruto</span>
+        </div>
+
+        <div class="section-label">Itens da Operação</div>
+        <table class="wida">
+          <thead>
+            <tr>
+              <th style="width:30%;">Material</th>
+              <th style="width:18%;">Quantidade</th>
+              <th style="width:24%;">Valor Unitário</th>
+              <th style="width:24%;">Subtotal</th>
+              <th style="width:14%;">Ação</th>
+            </tr>
+          </thead>
+          <tbody id="comprarTbody"></tbody>
+        </table>
+        <div id="comprarEmpty" class="empty-state">
+          <div class="emoji">📦</div>
+          <div>Nenhum material adicionado ainda</div>
+        </div>
+
+        <div class="venda-add">
+          <div class="section-label">Adicionar material à cesta</div>
+          <div class="form-row">
+            <select id="comprarMat"></select>
+            <input type="number" id="comprarQtd" placeholder="Qtd" min="0" step="1">
+            <button type="button" class="btn btn-primary btn-add" id="btnAddComprar">Adicionar</button>
+          </div>
+        </div>
+
+        <div class="totals">
+          <div class="total-item">
+            <div class="lbl">Valor bruto total</div>
+            <div class="val" id="cBruto">R$ 0,00</div>
+            <div class="note">Soma no modo desmanche</div>
+          </div>
+          <div class="total-item">
+            <div class="lbl">Desconto (dinheiro sujo)</div>
+            <div class="val desconto" id="cDesc">R$ 0,00</div>
+            <div class="note">30% sobre o valor bruto</div>
+          </div>
+          <div class="total-item">
+            <div class="lbl">LUCRO (dinheiro sujo)</div>
+            <div class="val lucro" id="cLucro">R$ 0,00</div>
+            <div class="note">Valor que fica com o ferro-velho</div>
+          </div>
+          <div class="total-item">
+            <div class="lbl">Total a pagar ao cliente</div>
+            <div class="val final" id="cFinal">R$ 0,00</div>
+            <div class="note">Valor final da operação</div>
+          </div>
+        </div>
+
+        <div class="actions" style="margin-top:28px;">
+          <button type="button" class="btn btn-ghost" id="btnCopyComprar">Copiar Resumo</button>
+          <button type="button" class="btn btn-danger" id="btnLimparComprar">Limpar Operação</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<div id="toast"></div>
+
+<!-- ============ Modal Edição de Receitas ============ -->
+<div class="modal-overlay" id="modalEdit">
+  <div class="modal">
+    <h2>Editar Receitas e Preços</h2>
+    <p style="font-size:14px;color:var(--text-dim);margin-bottom:24px;">Altere os materiais por unidade e o preço de venda de cada produto.</p>
+    <div id="editContent"></div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" id="btnResetRecipes">Resetar Padrão</button>
+      <button type="button" class="btn btn-primary" id="btnSaveRecipes">Salvar Alterações</button>
+      <button type="button" class="btn btn-ghost" id="btnCloseEdit">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/script.js"></script>
+</body>
+</html>

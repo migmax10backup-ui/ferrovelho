@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="2600" viewBox="0 0 2000 2600">
+  <defs>
+    <style>
+      .bg { fill: #0a0a0a; }
+      .panel { fill: #121212; stroke: #2b2b2b; stroke-width: 5; rx: 30; ry: 30; }
+      .title { font-family: Arial, sans-serif; font-size: 52px; font-weight: 900; fill: #fff; text-anchor: middle; letter-spacing: 4px; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 32px; fill: #00e676; text-anchor: middle; letter-spacing: 2px; }
+      .label { font-family: Arial, sans-serif; font-size: 22px; fill: #888888; text-anchor: middle; text-transform: uppercase; letter-spacing: 1px; }
+      .price { font-family: Arial, sans-serif; font-size: 30px; font-weight: 900; fill: #ffd166; text-anchor: middle; }
+      .green { fill: #00e676; }
+      .green-dark { fill: #007a3d; }
+      .stroke-green { stroke: #00e676; stroke-width: 5; fill: none; }
+      .stroke-white { stroke: #fff; stroke-width: 3; fill: none; }
+      .stroke-dark { stroke: #0a0a0a; stroke-width: 7; fill: none; }
+    </style>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00e676" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#007a3d" stop-opacity="0.04"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="2000" height="2600" class="bg"/>
+
+  <text x="1000" y="85" class="title">FERRO VELHO — MOLDES DOS CRAFTS</text>
+
+  <!-- Grid 2 colunas x 4 linhas -->
+  <g transform="translate(80, 180)">
+    <!-- Linha 1 -->
+    <g transform="translate(0, 0)">
+      <rect x="0" y="0" width="880" height="560" class="panel"/>
+      <circle cx="440" cy="250" r="110" class="stroke-green"/>
+      <rect x="360" y="360" width="120" height="140" rx="15" fill="url(#g1)" class="stroke-green"/>
+      <text x="440" y="480" class="subtitle">MICHA</text>
+      <text x="440" y="520" class="label">Lockpick</text>
+    </g>
+    <g transform="translate(960, 0)">
+      <rect x="0" y="0" width="880" height="560" class="panel"/>
+      <rect x="340" y="220" width="140" height="220" rx="20" fill="url(#g1)" class="stroke-green"/>
+      <circle cx="440" cy="500" r="36" class="green"/>
+      <text x="440" y="550" class="subtitle">C4</text>
+      <text x="440" y="590" class="label">Bomba Caseira</text>
+    </g>
+
+    <!-- Linha 2 -->
+    <g transform="translate(0, 620)">
+      <rect x="0" y="0" width="880" height="560" class="panel"/>
+      <rect x="280" y="280" width="280" height="140" rx="18" fill="url(#g1)" class="stroke-green"/>
+      <line x1="290" y1="350" x2="550" y2="350" class="stroke-dark"/>
+      <line x1="290" y1="385" x2="550" y2="385" class="stroke-dark"/>
+      <text x="440" y="490" class="subtitle">PLACA</text>
+      <text x="440" y="530" class="label">Veicular</text>
+    </g>
+    <g transform="translate(960, 620)">
+      <rect x="0" y="0" width="880" height="560" class="panel"/>
+      <circle cx="440" cy="280" r="160" fill="none" stroke="#00e676" stroke-width="20"/>
+      <circle cx="440" cy="280" r="64" fill="#0a0a0a" stroke="#00e676" stroke-width="3"/>
+      <line x1="440" y1="120" x2="440" y2="440" stroke="#00e676" stroke-width="3" opacity="0.4"/>
+      <line x1="240" y1="280" x2="640" y2="280" stroke="#00e676" stroke-width="3" opacity="0.4"/>
+      <text x="440" y="500" class="subtitle">PNEU</text>
+    </g>
+
+    <!-- Linha 3 -->
+    <g transform="translate(0, 1240)">
+      <rect x="0" y="0" width="880" height="560" class="panel"/>
+      <path d="M220 350 L440 220 L660 350 L440 480 Z" fill="url(#g1)" class="stroke-green"/>
+      <rect x="390" y="450" width="60" height="80" rx="8" fill="#0a0a0a"/>
+      <text x="440" y="540" class="subtitle">LATARIA</text>
+      <text x="440" y="580" class="label">Reparo</text>
+    </g>
+    <g transform="translate(960, 1240)">
+      <rect x="0" y="0" width="880" height="560" class="panel"/>
+      <rect x="240" y="240" width="220" height="160" rx="22" fill="url(#g1)" class="stroke-green"/>
+      <circle cx="300" cy="340" r="22" fill="#0a0a0a" stroke="#00e676" stroke-width="3"/>
+      <circle cx="420" cy="340" r="22" fill="#0a0a0a" stroke="#00e676" stroke-width="3"/>
+      <text x="440" y="480" class="subtitle">MOTOR</text>
+      <text x="440" y="520" class="label">Reparo</text>
+    </g>
+
+    <!-- Linha 4 -->
+    <g transform="translate(0, 1860)">
+      <rect x="0" y="0" width="880" height="560" class="panel"/>
+      <rect x="280" y="200" width="160" height="280" rx="14" fill="url(#g1)" class="stroke-green"/>
+      <path d="M270 200 L290 220 L270 240 Z" class="green"/>
+      <path d="M370 200 L350 220 L370 240 Z" class="green"/>
+      <text x="440" y="540" class="subtitle">TICKET</text>
+    </g>
+    <g transform="translate(960, 1860)">
+      <rect x="0" y="0" width="880" height="560" class="panel"/>
+      <rect x="240" y="180" width="220" height="320" rx="16" fill="url(#g1)" class="stroke-green"/>
+      <rect x="265" y="205" width="170" height="250" rx="12" fill="#0a0a0a"/>
+      <circle cx="360" y="560" r="24" class="green"/>
+      <text x="360" y="600" class="subtitle">TABLET</text>
+      <text x="360" y="640" class="label">Descartável</text>
+    </g>
+  </g>
+</svg>
